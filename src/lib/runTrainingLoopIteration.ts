@@ -32,6 +32,11 @@ export const runTrainingLoopIteration = ({
       return acc;
     }, new Value(0));
 
+  // Zero grad before backward pass
+  network.parameters().forEach((p) => {
+    p.grad = 0;
+  });
+
   // Backward pass
   loss.backward();
 
