@@ -1,3 +1,8 @@
+/**
+ * The Value object.
+ *
+ * A scalar value that supports backpropogation.
+ */
 export class Value {
   id: number;
   input: number;
@@ -12,6 +17,9 @@ export class Value {
     this.operator = operator;
   }
 
+  /**
+   * Add a value.
+   */
   add(next: Value): Value {
     const out = new Value(this.input + next.input, [this, next], "+");
 
@@ -23,6 +31,9 @@ export class Value {
     return out;
   }
 
+  /**
+   * Multiply a value.
+   */
   mul(next: Value): Value {
     const out = new Value(this.input * next.input, [this, next], "*");
 
@@ -34,8 +45,11 @@ export class Value {
     return out;
   }
 
-  relu(): Value {
-    const out = new Value(Math.max(this.input, 0), [this], "relu");
+  /**
+   * Apply a reLU activation function.
+   */
+  reLU(): Value {
+    const out = new Value(Math.max(this.input, 0), [this], "reLU");
 
     out._backward = () => {
       this.grad += out.input > 0 ? out.input * out.grad : 0;
@@ -44,6 +58,9 @@ export class Value {
     return out;
   }
 
+  /**
+   * Make a backwards pass and assign gradient values.
+   */
   backward(): void {
     // Topological sort of every child in the graph
     const sorted: Value[] = [];
@@ -59,7 +76,7 @@ export class Value {
     };
     topSort(this);
 
-    // Apply chain rule to every child to get its gradient
+    // Apply the chain rule to every child to get its gradient.
     this.grad = 1;
     sorted.reverse().forEach((v) => {
       v._backward();

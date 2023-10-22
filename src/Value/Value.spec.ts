@@ -101,9 +101,9 @@ test("should handle a neuron", () => {
   const x2w2 = x2.mul(w2);
   const x1w1x2w2 = x1w1.add(x2w2);
   const n = x1w1x2w2.add(b);
-  const yhat = n.relu();
+  const yhat = n.reLU();
 
-  const expected = new Value(0.8813735870195432, [n], "relu");
+  const expected = new Value(0.8813735870195432, [n], "reLU");
 
   expect(JSON.stringify(yhat)).toEqual(JSON.stringify(expected));
 
