@@ -84,7 +84,7 @@ test("should add and multiply using repeated values", () => {
   expect(d.grad).toEqual(-6.0);
   expect(c.grad).toEqual(1);
   expect(b.grad).toEqual(-8.0);
-  expect(a.grad).toEqual(3.0);
+  expect(a.grad).toEqual(-3.0);
 });
 
 test("should handle a neuron", () => {
@@ -95,11 +95,28 @@ test("should handle a neuron", () => {
   const w1 = new Value(-3.0);
   const w2 = new Value(1.0);
   // Bias
-  const b = new Value(6.7);
+  const b = new Value(6.881373587019543);
   // y hat
   const x1w1 = x1.mul(w1);
   const x2w2 = x2.mul(w2);
-  const x1w1x2w2 = x1w1.mul(x2w2);
-  const yhat = x1w1x2w2.add(b);
-  console.log(yhat);
+  const x1w1x2w2 = x1w1.add(x2w2);
+  const n = x1w1x2w2.add(b);
+  const yhat = n.relu();
+
+  const expected = new Value(0.8813735870195432, [n], "relu");
+
+  expect(JSON.stringify(yhat)).toEqual(JSON.stringify(expected));
+
+  yhat.backward();
+
+  expect(yhat.grad).toEqual(1);
+  expect(n.grad).toEqual(0.88137358701954321);
+  expect(x1w1x2w2.grad).toEqual(0.88137358701954321);
+  expect(b.grad).toEqual(0.88137358701954321);
+  expect(x1w1.grad).toEqual(0.88137358701954321);
+  expect(x2w2.grad).toEqual(0.88137358701954321);
+  expect(x2.grad).toEqual(0.88137358701954321);
+  expect(w2.grad).toEqual(0.0);
+  expect(x1.grad).toEqual(-2.6441207610586295);
+  expect(w1.grad).toEqual(1.7627471740390863);
 });

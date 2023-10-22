@@ -1,9 +1,10 @@
 # System
 .DS_Store
+.vscode
+.parcel-cache
 
 # Dependencies
 /node_modules
 
 # Build
 dist
-.parcel-cache

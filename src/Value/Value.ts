@@ -1,4 +1,5 @@
 export class Value {
+  id: number;
   input: number;
   operator: string;
   children: Value[];
@@ -14,7 +15,7 @@ export class Value {
   add(next: Value): Value {
     const out = new Value(this.input + next.input, [this, next], "+");
 
-    this._backward = () => {
+    out._backward = () => {
       this.grad += out.grad;
       next.grad += out.grad;
     };
@@ -25,34 +26,42 @@ export class Value {
   mul(next: Value): Value {
     const out = new Value(this.input * next.input, [this, next], "*");
 
-    this._backward = () => {
+    out._backward = () => {
       this.grad += next.input * out.grad;
-      next.grad = this.input * out.grad;
+      next.grad += this.input * out.grad;
+    };
+
+    return out;
+  }
+
+  relu(): Value {
+    const out = new Value(Math.max(this.input, 0), [this], "relu");
+
+    out._backward = () => {
+      this.grad += out.input > 0 ? out.input * out.grad : 0;
     };
 
     return out;
   }
 
   backward(): void {
-    // Topographical sort
-    const topo: Value[] = [];
+    // Topological sort of every child in the graph
+    const sorted: Value[] = [];
     const visited: Value[] = [];
-
-    const buildTopo = (v: Value): void => {
+    const topSort = (v: Value): void => {
       if (!visited.includes(v)) {
         visited.push(v);
         v.children.forEach((child) => {
-          buildTopo(child);
+          topSort(child);
         });
-        topo.push(v);
+        sorted.push(v);
       }
     };
+    topSort(this);
 
-    buildTopo(this);
-
+    // Apply chain rule to every child to get its gradient
     this.grad = 1;
-
-    topo.reverse().forEach((v) => {
+    sorted.reverse().forEach((v) => {
       v._backward();
     });
   }
