@@ -53,6 +53,35 @@ test("should add then multiply", () => {
   expect(a.grad).toEqual(5);
 });
 
+test("should raise a number to a power", () => {
+  const a = new Value(8);
+  const b = new Value(2);
+  const l = a.pow(b);
+
+  const expected = new Value(64, [a, b], "**");
+
+  expect(JSON.stringify(l)).toEqual(JSON.stringify(expected));
+
+  l.backward();
+
+  expect(l.grad).toEqual(1);
+  expect(a.grad).toEqual(16);
+});
+
+test("should raise e to the power of the input", () => {
+  const a = new Value(1);
+  const l = a.exp();
+
+  const expected = new Value(2.718281828459045, [a], "exp");
+
+  expect(JSON.stringify(l)).toEqual(JSON.stringify(expected));
+
+  l.backward();
+
+  expect(l.grad).toEqual(1);
+  expect(a.grad).toEqual(2.718281828459045);
+});
+
 test("should add itself", () => {
   const a = new Value(2);
   const l = a.add(a);
