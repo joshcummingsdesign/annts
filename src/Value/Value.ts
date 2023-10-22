@@ -59,26 +59,15 @@ export class Value {
   }
 
   /**
-   * Raise e to the power of the input.
+   * Apply a tanh activation function.
    */
-  exp(): Value {
-    const out = new Value(Math.exp(this.input), [this], "exp");
+  tanh(): Value {
+    const n = this.input;
+    const t = (Math.exp(2 * n) - 1) / (Math.exp(2 * n) + 1);
+    const out = new Value(t, [this], "tanh");
 
     out._backward = () => {
-      this.grad += out.input * out.grad;
-    };
-
-    return out;
-  }
-
-  /**
-   * Apply a reLU activation function.
-   */
-  reLU(): Value {
-    const out = new Value(Math.max(this.input, 0), [this], "reLU");
-
-    out._backward = () => {
-      this.grad += out.input > 0 ? out.input * out.grad : 0;
+      this.grad += (1 - t ** 2) * out.grad;
     };
 
     return out;
