@@ -2,7 +2,7 @@ import { Value } from "../Value";
 import { MLP } from "../MLP";
 import { test, expect } from "@jest/globals";
 
-test("should be capable of being trained successfully", () => {
+test("should be capable of being trained to do binary classification", () => {
   const n = new MLP(3, [4, 4, 1]);
 
   const testData = [
