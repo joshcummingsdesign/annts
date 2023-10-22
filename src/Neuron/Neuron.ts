@@ -1,4 +1,4 @@
-import { random } from "../helpers";
+import { random } from "../lib/random";
 import { Value } from "../Value";
 
 /**
