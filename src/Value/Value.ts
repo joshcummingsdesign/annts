@@ -74,7 +74,7 @@ export class Value {
   }
 
   /**
-   * Make a backwards pass and assign gradient values.
+   * Make a backward pass and assign gradient values.
    */
   backward(): void {
     // Topological sort of every child in the graph
