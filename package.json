@@ -5,7 +5,8 @@
   "main": "dist/main.js",
   "scripts": {
     "dev": "parcel watch",
-    "build": "parcel build",
+    "build": "npm run clean && parcel build --no-source-maps",
+    "clean": "rm -rf dist/*",
     "test": "jest",
     "test:watch": "jest --watch",
     "train": "node ./dist/main.js"
