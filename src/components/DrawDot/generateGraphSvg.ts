@@ -1,3 +1,5 @@
+/* eslint-disable-next-line  @typescript-eslint/ban-ts-comment */
+// @ts-ignore
 import { instance } from "@viz-js/viz";
 import { Value } from "../../engine/Value";
 import { buildDot } from "./buildDot";
