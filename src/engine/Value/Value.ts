@@ -1,7 +1,7 @@
 /**
  * The Value object.
  *
- * A scalar value that supports backpropogation.
+ * A scalar value that supports backpropagation.
  */
 export class Value {
   input: number;

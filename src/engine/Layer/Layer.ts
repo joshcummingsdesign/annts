@@ -23,8 +23,12 @@ export class Layer {
 
   /**
    * Fire all the neurons in the layer.
+   *
+   * Takes in the inputs and returns an array of weighted sums.
+   *
+   * @returns {Value[]} yhat array
    */
-  fire(values: Value[]): Value[] {
-    return this.neurons.map((neuron) => neuron.fire(values));
+  fire(inputs: Value[]): Value[] {
+    return this.neurons.map((neuron) => neuron.fire(inputs));
   }
 }

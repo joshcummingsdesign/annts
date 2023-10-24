@@ -23,10 +23,16 @@ export class Neuron {
   /**
    * Fire the neuron.
    *
-   * Returns the yhat (w * x + b).
+   * Takes in the inputs and returns the weighted sum.
+   *
+   * ```
+   * yhat = (x1 * w1) + (x2 * w2) ... + b
+   * ```
+   *
+   * @returns {Value} yhat
    */
-  fire(values: Value[]): Value {
-    return values
+  fire(inputs: Value[]): Value {
+    return inputs
       .reduce((acc, xi, i) => {
         const wi = this.weights[i];
         const wixi = wi.mul(xi);

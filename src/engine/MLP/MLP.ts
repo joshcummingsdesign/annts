@@ -8,8 +8,8 @@ export class MLP {
   layers: Layer[];
 
   constructor(numInputs: number, layers: number[]) {
-    const sz = [numInputs, ...layers];
-    this.layers = layers.map((_, i) => new Layer(sz[i], sz[i + 1]));
+    const size = [numInputs, ...layers];
+    this.layers = layers.map((_, i) => new Layer(size[i], size[i + 1]));
   }
 
   /**
@@ -23,10 +23,14 @@ export class MLP {
   }
 
   /**
-   * Fire the neural network.
+   * Fire all the layers in the neural network.
+   *
+   * Takes in the inputs and returns an array of weighted sums.
+   *
+   * @returns {Value[]} yhat array
    */
-  fire(values: Value[]): Value[] {
-    let x = this.layers[0].fire(values);
+  fire(inputs: Value[]): Value[] {
+    let x = this.layers[0].fire(inputs);
 
     this.layers.slice(1).forEach((layer) => {
       x = layer.fire(x);
