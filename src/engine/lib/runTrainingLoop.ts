@@ -43,8 +43,8 @@ export const runTrainingLoop = ({ steps, ...params }: Params): Results => {
       JSON.stringify(
         finalParams.map((p) => p.input),
         null,
-        2,
-      ),
+        2
+      )
     );
 
   return {

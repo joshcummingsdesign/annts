@@ -1,7 +1,7 @@
+import { test, expect } from "vitest";
 import { Value } from "../Value";
 import { MLP } from "../MLP";
 import { runTrainingLoop } from "../lib/runTrainingLoop";
-import { test, expect } from "@jest/globals";
 
 test("should be capable of being trained to do binary classification", () => {
   const network = new MLP(3, [4, 4, 1]);

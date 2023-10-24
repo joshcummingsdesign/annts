@@ -1,5 +1,5 @@
+import { test, expect } from "vitest";
 import { Value } from "./Value";
-import { test, expect } from "@jest/globals";
 
 test("should add", () => {
   const a = new Value(1);

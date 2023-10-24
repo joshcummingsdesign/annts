@@ -1,5 +1,6 @@
 import { MLP } from "../MLP";
 import { Value } from "../Value";
+import { calculateLoss } from "./calculateLoss";
 
 export interface TrainingLoopIteration {
   network: MLP;
@@ -23,14 +24,7 @@ export const runTrainingLoopIteration = ({
   const predictions = testData.map((data) => network.fire(data));
 
   // Evaluate the Mean Squared Error (MSE) loss
-  // sum([..., (prediction - target)**2])
-  const loss = predictions
-    .map((p) => p[0]) // clean up array
-    .map((p, i) => p.add(new Value(-targets[i])).pow(new Value(2)))
-    .reduce((acc, p) => {
-      acc = acc.add(p);
-      return acc;
-    }, new Value(0));
+  const loss = calculateLoss(targets, predictions);
 
   // Zero grad before backward pass
   network.parameters().forEach((p) => {

@@ -4,7 +4,6 @@
  * A scalar value that supports backpropogation.
  */
 export class Value {
-  id: number;
   input: number;
   operator: string;
   children: Value[];

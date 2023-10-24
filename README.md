@@ -31,3 +31,9 @@ Run
 ```sh
 npm run train
 ```
+
+Visualize
+
+```sh
+npm run dev
+```
